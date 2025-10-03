@@ -21,6 +21,16 @@ class FirstWid extends StatelessWidget {
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
         ),
+        body: const Center(
+          child: Text(
+            'Muhammad Haroon Iftikhar',
+            style: TextStyle(
+              fontSize:30,
+              fontWeight: FontWeight.bold,
+              color: Colors.amberAccent
+            ),
+          ),
+        ),
       ),
     );
   }
