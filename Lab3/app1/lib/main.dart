@@ -21,15 +21,33 @@ class FirstWid extends StatelessWidget {
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
         ),
-        body: const Center(
-          child: Text(
+        body: Column(
+        //  mainAxisAlignment: MainAxisAlignment.center,
+          //crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: [
+            Text(
             'Muhammad Haroon Iftikhar',
             style: TextStyle(
               fontSize:30,
               fontWeight: FontWeight.bold,
-              color: Colors.amberAccent
+              color: Colors.green
             ),
           ),
+          SizedBox(height: 30,),
+            Text(
+            '22-NTU-CS-1197',
+            style: TextStyle(
+              fontSize:30,
+              fontWeight: FontWeight.bold,
+              color: Colors.green
+            ),
+          ),
+          SizedBox(height: 10,),
+          Image.network('https://static.vecteezy.com/system/resources/thumbnails/049/855/347/small_2x/nature-background-high-resolution-wallpaper-for-a-serene-and-stunning-view-photo.jpg',
+          width: 500,
+          height: 500,)
+          ],
         ),
       ),
     );
