@@ -1,0 +1,78 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyFlutterApp());
+  
+}
+class MyFlutterApp extends StatefulWidget {
+  const MyFlutterApp({super.key});
+  @override
+  State<MyFlutterApp> createState() => _MyFlutterAppState();
+}
+class _MyFlutterAppState extends State<MyFlutterApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        appBarTheme: AppBarTheme(
+         centerTitle: true,
+          backgroundColor: Colors.blueAccent,
+          foregroundColor: Colors.white,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Colors.yellowAccent),
+            foregroundColor: WidgetStatePropertyAll(Colors.black),
+  
+          )
+        ),
+        textTheme: TextTheme(
+          labelLarge: TextStyle(fontSize: 30, color: Colors.yellow)
+        )
+      ),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          
+          title: const Text("Flutter Themes"),),
+
+          body: const Column(
+            children: [
+              SizedBox(height: 20,),
+              ElevatedButton(onPressed: null, child: Text("Elevated Button 1")),
+              SizedBox(height: 30),
+               ElevatedButton(onPressed: null, child: Text("Elevated Button 2")),
+              SizedBox(height: 30),
+               ElevatedButton(onPressed: null, child: Text("Elevated Button 3")),
+              SizedBox(height: 30),
+              TextThemeClass(),
+               
+
+            ],
+          ),
+      ),
+      
+    );
+  }
+}
+
+class TextThemeClass extends StatelessWidget {
+  const TextThemeClass({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text("Flutter Themes lab",style: Theme.of(context).textTheme.labelLarge,),
+        SizedBox(height: 30),
+               Text("How to apply theme on text",style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.blue) )
+    
+
+      ],
+    );
+    
+  }
+}
+
