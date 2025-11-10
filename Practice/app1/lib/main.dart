@@ -1,25 +1,41 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _MyAppState extends State<MyApp> {
+  double _currentValue = 50; // initial value
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Practice App')),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(height: 100, width: 100, color: Colors.red),
-            Container(height: 100, width: 150, color: Colors.green),
-            Container(height: 100, width: 100, color: Colors.pink),
-          ],
+        appBar: AppBar(title: Text('Slider Example')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Slider(
+                value: _currentValue,
+                min: 0,
+                max: 100,
+                divisions: 20, // optional: shows steps
+                label: _currentValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentValue = value; // update value
+                  });
+                },
+              ),
+              Text('Value: ${_currentValue.toStringAsFixed(1)}'),
+            ],
+          ),
         ),
       ),
     );
