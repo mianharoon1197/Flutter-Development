@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
                 value: _currentValue,
                 min: 0,
                 max: 100,
-                divisions: 20, // optional: shows steps
+                divisions: 5, // optional: shows steps
                 label: _currentValue.round().toString(),
                 onChanged: (double value) {
                   setState(() {
