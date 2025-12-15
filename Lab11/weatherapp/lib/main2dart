@@ -1,0 +1,116 @@
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const LocationScreen(),
+    );
+  }
+}
+
+class LocationScreen extends StatefulWidget {
+  const LocationScreen({super.key});
+
+  @override
+  State<LocationScreen> createState() => _LocationScreenState();
+}
+
+class _LocationScreenState extends State<LocationScreen> {
+  Position? _position;
+  bool _loading = false;
+  String _statusMessage = "Press the button to get your location";
+
+  Future<void> _getLocation() async {
+    setState(() {
+      _loading = true;
+      _statusMessage = "Fetching location...";
+    });
+
+    // Check permission
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      setState(() {
+        _loading = false;
+        _statusMessage = "Location services are disabled";
+      });
+      return;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      setState(() {
+        _loading = false;
+        _statusMessage = "Location permission permanently denied";
+      });
+      return;
+    }
+
+    // Get the location
+    try {
+      Position pos = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      setState(() {
+        _position = pos;
+        _loading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _loading = false;
+        _statusMessage = "Error fetching location";
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Current Location App")),
+      body: Center(
+        child: _loading
+            ? const SpinKitFadingCircle(
+                size: 60,
+                color: Colors.blue,
+              )
+            : _position != null
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Latitude: ${_position!.latitude}",
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Longitude: ${_position!.longitude}",
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  )
+                : Text(
+                    _statusMessage,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _getLocation,
+        child: const Icon(Icons.location_searching),
+      ),
+    );
+  }
+}
